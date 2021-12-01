@@ -1,0 +1,36 @@
+#! /usr/bin/python3
+
+
+# Count how many numbers are higher than its preceding number
+def day1_1(openfile):
+    f = open(openfile)
+    lns = f.readlines()
+    lctr, cntr, nmbr, cnt = -1, 0, 0, len(lns)
+    while cntr < cnt:
+        if int(lns[cntr]) > int(nmbr):
+            lctr += 1
+        nmbr = lns[cntr]
+        cntr += 1
+    f.close()
+    return lctr
+
+# Count how many sets of 3 are higher than the preceding set of 3. First set of 3 starts at first number, second set of
+# 3 starts at the second number, and so on
+def day1_2(openfile):
+    f = open(openfile)
+    lns = f.readlines()
+    lctr, cntr, nmbr, cnt, oldsumma = -1, 0, 0, len(lns), 0
+    while cntr < (cnt - 2):
+        a, b, c = int(lns[cntr]), int(lns[cntr + 1]), int(lns[cntr + 2])
+        summa = a + b + c
+        print(summa)
+        if summa > oldsumma:
+            lctr += 1
+        a, b, c = 0, 0, 0
+        oldsumma = summa
+        cntr += 1
+    f.close()
+    return lctr
+
+#print(day1_2('/home/tinuz/Desktop/aoc/d1/d1.txt')) # Result = 1567
+#print(day1_1('/home/tinuz/Desktop/aoc/d1/d1.txt')) # Result = 1529
