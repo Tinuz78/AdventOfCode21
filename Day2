@@ -1,0 +1,55 @@
+#! /usr/bin/python3
+
+
+# Control the submarine. You get 3 types of input, up, down and forward, all with a trailing value. Starting values
+# are 0 (zero). I need to have an X,Y nav location by following the instructions. In the end I need to multiply 
+# the outcome.
+
+def day2_1(openfile):
+    f = open(openfile)
+    lns = f.readlines()
+    counter, forward, depth = 0, 0, 0
+    linecount = len(lns)
+
+    while counter < linecount:
+        instruct = lns[counter].split()
+        if instruct[0] == "forward":
+            forward += int(instruct[-1])
+        if instruct[0] == 'up':
+            depth += int(instruct[-1])
+        if instruct[0] == 'down':
+            depth -= int(instruct[-1])
+        counter += 1
+    f.close()
+    return 'Forward:' + str(forward) + ' depth:' + str(depth)
+
+
+# Same as part 1, but up and down are switched, and there is a new mathematical value that needs to be taken into
+# account; aim. Aim is calculated by:
+# When 'down', the number is added to aim. When 'forward', its value is multiplied by 'aim'. 'Up' would decrease
+# aim, i.e. 3. Aim is then 2. When another 'forward' occurs (i.e. 10), aim would become (aim=2, forward =10, makes 20)
+# which is added to 'depth' In the end, the result is calculated by multiplying horizontal position by depth.
+
+def day2_2(openfile):
+    f = open(openfile)
+    lns = f.readlines()
+    aim, counter, forward, tempdepth, depth = 0, 0, 0, 0, 0
+    linecount = len(lns)
+
+    while counter < linecount:
+        instruct = lns[counter].split()
+        if instruct[0] == "forward":
+            tempdepth = (int(instruct[-1]) * aim)
+            depth += tempdepth
+            forward += int(instruct[-1])
+        if instruct[0] == 'up':
+            aim -= int(instruct[-1])
+        if instruct[0] == 'down':
+            aim += int(instruct[-1])
+        counter += 1
+    f.close()
+    result = (forward * depth)
+    return 'Forward * Depth = ' + str(result)
+
+# print(day2_1('/home/tinuz/Desktop/aoc/d2/d2.txt')) # result = -1746616
+# print(day2_2('/home/tinuz/Desktop/aoc/d2/d2.txt')) # result = 1741971043
