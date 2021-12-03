@@ -1,0 +1,68 @@
+#!/usr/bin/python3
+
+
+# These first functions will be for the library I'm building, very convenient to have a start of my lib. (its n00b, but
+# still fun to start with it. In /gw/q/vb/vs/vs.net i had a VERY extensive library, I started out with similar stuff,
+# one has to start somewhere right :P
+def int_bin(nmbr):                      # Convert a number to binary
+    return format(nmbr, 'b')
+
+
+def bin_ascii(nmbr):                    # Convert binary string to its ASCII character
+    return chr(int(nmbr, 2))
+
+
+def bin_dec(nmbr):                      # Convert binary string to a decimal value
+    nbmr = int(nmbr, 2)
+    return nbmr
+
+
+def getfilecontent(openfile):           # Function to get contents of a file, stores it in a list.
+    file2open = open(openfile)
+    content = file2open.readlines()
+    file2open.close()
+    return content
+
+# Day 3, part 1. From the set of binary numbers given, I need to filter each item based on certain criteria. Each binary
+# consists of 12 numbers. This first filter is made up by counting each bit. If the 1 is represented more in the first
+# column, than the first new binary is 1, else the binary start with 0. That is the case with all bits in the set. The
+# first part counts how many times a 1 is present in each bit.
+def day3_1(openfile):
+    mytext = getfilecontent('/home/tinuz/Desktop/aoc/d3/d3.txt')
+    counter, item = 0, 0
+    countitem = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    while counter < len(mytext):
+        binitem = mytext[counter]
+        while item < len(binitem):
+            if binitem[item] == '1':
+                countitem[item] += 1
+            item += 1
+        item = 0
+        counter += 1
+
+# Make up the binary by determining if in each bit a zero or one is represented more. There are 1000 binaries, so 
+# whenever a number is represented more than 500 times, that number stands for the boolean bit, 0 or 1.
+    result = ''
+    for binpart in countitem:
+        if int(binpart) > 500:
+            result = (result + '1')
+        if int(binpart) < 500:
+            result = (result + '0')
+    gamma = bin_dec(result)
+
+# Previous binary is part one of the equation, now i need to 'invert'  the binary to get the second part of the 
+# solution. That is done in this next piece of code.
+    swres = ''
+    for switch in result:
+        if int(switch) == 0:
+            swres = (swres + '1')
+        else:
+            swres = (swres + '0')
+    epsylon = bin_dec(swres)
+
+# Last part part multiplies both parts of the solution.
+    result = int(gamma) * int(epsylon)
+    return result
+
+print(day3_1('/home/tinuz/Desktop/aoc/d3/d33.txt')) # Result is 3882564 in my case
+
