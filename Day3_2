@@ -1,0 +1,79 @@
+#!/usr/bin/python3
+
+
+def int_bin(nmbr):  # Convert a number to binary
+    return format(nmbr, 'b')
+
+
+def bin_ascii(nmbr):  # Convert binary string to its ASCII character
+    return chr(int(nmbr, 2))
+
+
+def bin_dec(nmbr):  # Convert binary string to a decimal value
+    nbmr = int(nmbr, 2)
+    return nbmr
+
+
+def getfilecontent(openfile):  # Function to get contents of a file, stores it in a list.
+    file2open = open(openfile)
+    content = file2open.readlines()
+    file2open.close()
+    return content
+
+
+def day3_2(openfile):
+    
+    # This part needs to calculate the oxygen. This is achieved by filtering out the MOST counted boolean value 
+    # on each position of the binary list. In the end you are left with one binary value. Its decimal value 
+    # stands for the oxy value.
+    mytext = getfilecontent(openfile)
+    count = 0
+    while count < 12:
+        if len(mytext) != 0:
+            mytext = filteritems(mytext, count, 1)
+            # print(mytext)
+        count += 1
+    oxy = bin_dec(mytext[0])
+    print('Oxy generator ' + mytext[0] + 'has a decimal value of: ' + str(oxy))
+
+    # Same as the above code, but now you need to have the binary filtered on the LEAST counted boolean value.
+    # Its decimal value stands for the co2 scrubber rate.
+    mytext = getfilecontent(openfile)
+    count = 0
+    while count < 12:
+        if len(mytext) > 1:
+            mytext = filteritems(mytext, count, 0)
+            # print(mytext)
+        count += 1
+    co2 = bin_dec(mytext[0])
+    print('CO2 scrubber ' + mytext[0] + 'has a decimal value of: ' + str(co2))
+    
+    # The multiplied value stands for the solution
+    result = oxy * co2
+    return result
+
+# Filter given text (str2filter) on boolean on position (position), en return either the list with the most or the least
+# results (highorlow, 0 = least, 1 = most)
+def filteritems(str2filter, position, highorlow):
+    zero, one = [], []
+    cntr = 0
+    while cntr < len(str2filter):
+        item = str2filter[cntr]
+        if len(item) > 1:
+            if item[position] == '0':
+                zero.append(item)
+            if item[position] == '1':
+                one.append(item)
+            cntr += 1
+    if highorlow == 1:
+        if len(one) >= len(zero):
+            return one
+        else:
+            return zero
+    if highorlow == 0:
+        if len(one) >= len(zero):
+            return zero
+        else:
+            return one
+
+print(day3_2('/home/tinuz/Desktop/aoc/d3/d3.txt'))  # Result = 3385170
