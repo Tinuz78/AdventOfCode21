@@ -1,0 +1,31 @@
+'''
+# Advent of code, day 1, part 2
+file = open("D:\\advent01.txt", "r")
+conv, count, counter = "", 0, 0
+for line in file:
+    for x,char in enumerate(line):
+        if char.isdigit():
+            conv = conv + char
+        for z, val in enumerate(["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "zero"]):
+            if line[x:].startswith(val):
+                conv = conv + str(z+1)
+    counter = conv[0] + conv[-1]
+    count += int(counter)
+    conv = ""
+print(f"Sum is {count}")
+file.close()
+'''
+
+'''
+# Advent of code, day 1, part 1
+import re
+
+file = open("D:\\advent01.txt", "r")                                    # Open datafile with puzzle input
+total = 0                                                               # Set basic integer
+for line in file:                                                       # Open each separate line in the file
+    match = str.strip(re.sub(r'[a-z]', '', line, flags=re.IGNORECASE))  # Strip of any alphabetic characters using 're'
+    s = match[0] + match[-1]                                            # Merge the first and last digit
+    total += int(s)                                                     # Add the merged value to the total sum
+print(total)                                                            # Print the sum
+file.close()                                                            # Close the file, done
+'''
