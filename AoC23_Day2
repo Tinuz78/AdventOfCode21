@@ -1,0 +1,79 @@
+'''
+#Advent of Code, Day 2, Part 2
+
+file = open("D:\\AoC23\\Advent02.txt", "r")
+
+counter, t_red, t_green, t_blue = 0, 0, 0, 0
+for line in file:
+    game,results = line.split(':')
+    game_res = results.split(';')
+    for i in game_res:
+        x = i.split(',')
+        for ctr in range(len(x)):
+            itm = x[ctr]
+            if 'red' in itm:
+                if int(itm[0:3]) > int(t_red):
+                    t_red = int(itm[0:3])
+                else:
+                    pass
+            if 'green' in itm:
+                if int(itm[0:3]) > int(t_green):
+                    t_green = int(itm[0:3])
+                else:
+                    pass
+            if 'blue' in itm:
+                if int(itm[0:3]) > int(t_blue):
+                    t_blue = int(itm[0:3])
+                else:
+                    pass
+
+    powersum = (t_red * t_blue * t_green)
+    counter += int(powersum)
+    t_red, t_green, t_blue = 0, 0, 0
+
+print(f'Powersum: {counter}')
+file.close()
+'''
+
+
+
+'''
+Advent of Code Day2, Part 1
+import re
+
+file = open("D:\\AoC23\\Advent02.txt", "r")
+
+red, green, blue, counter, pas = 12, 13, 14, 0, ""
+for line in file:
+    game,results = line.split(':')
+    game_number = str.strip(re.sub(r'[a-z]', '', game, flags=re.IGNORECASE))
+#    print(game_number)
+    game_res = results.split(';')
+#    print(f'Game Result: {game_res}')
+    for i in game_res:
+        x = i.split(',')
+        for ctr in range(len(x)):
+            itm = x[ctr]
+            if 'red' in itm:
+                if int(itm[0:3]) <= int(red):
+                    pas = pas + "1"
+                else:
+                    pas = pas + "0"
+            if 'green' in itm:
+                if int(itm[0:3]) <= int(green):
+                    pas = pas + "1"
+                else:
+                    pas = pas + "0"
+            if 'blue' in itm:
+                if int(itm[0:3]) <= int(blue):
+                    pas = pas + "1"
+                else:
+                    pas = pas + "0"
+    if '0' in pas:
+        pas = ""
+    else:
+        counter += int(game_number)
+        pas = ""
+print(f'Game ID sum: {counter}')
+file.close()
+'''
